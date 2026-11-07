@@ -1,13 +1,14 @@
 /* Retheme in one place: change --accent (and --soft) below. */
 :root{
+  color-scheme: light;
   --bg:#ffefdf; --ink:#2B1A10; --muted:#7A6657; --line:#EADFD3;
   --accent:#C2410C; --on-accent:#FFFFFF; --soft:#FFEDD5; --danger:#9F1239;
   --font:"Bricolage Grotesque",system-ui,sans-serif; --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
 }
-@media (prefers-color-scheme:dark){:root{
-  --bg:#1A110B; --surface:#271A11; --ink:#F8EEE4; --muted:#BBA797; --line:#3D2B1E;
+/* @media (prefers-color-scheme:dark){:root{
+  --bg:#0f0905; --surface:#271A11; --ink:#F8EEE4; --muted:#BBA797; --line:#3D2B1E;
   --accent:#FB923C; --on-accent:#2A1204; --soft:#3A2210; --danger:#FF8A80;
-}}
+}} */
 *{box-sizing:border-box}
 body{margin:0;font-family:var(--font);background:var(--bg);color:var(--ink);line-height:1.5;-webkit-font-smoothing:antialiased}
 a{color:var(--accent)}
