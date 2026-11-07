@@ -2,11 +2,11 @@
   "rewrites": [
     {
       "source": "/api/:path*",
-      "destination": "https://YOUR-API-NAME.onrender.com/api/:path*"
+      "destination": "https://super-lamp-rwa2.onrender.com/api/:path*"
     },
     {
       "source": "/:code([A-Za-z0-9]{7})",
-      "destination": "https://YOUR-API-NAME.onrender.com/:code"
+      "destination": "https://super-lamp-rwa2.onrender.com/:code"
     }
   ]
 }
