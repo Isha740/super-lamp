@@ -53,6 +53,15 @@ app.add_middleware(
 )
 
 
+@app.middleware("http")
+async def no_store(request, call_next):
+    """Never let a CDN (e.g. Vercel's rewrite proxy) cache redirects or API data:
+    a cached redirect would skip the backend and stop clicks from being counted."""
+    response = await call_next(request)
+    response.headers.setdefault("Cache-Control", "no-store")
+    return response
+
+
 @app.get("/api/health", tags=["meta"])
 def health():
     return {"status": "ok"}

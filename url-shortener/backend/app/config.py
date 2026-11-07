@@ -1,3 +1,4 @@
+from pydantic import field_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -20,8 +21,17 @@ class Settings(BaseSettings):
 
     cache_ttl_seconds: int = 3600          # redis cache for code -> long url
     enable_background_flush: bool = True   # move redis click counters into Postgres
-    flush_interval_seconds: int = 5
+    flush_interval_seconds: int = 5        # use ~120 on Upstash's free plan (command quota)
     rate_limit_per_minute: int = 30        # shorten requests per user per minute
+
+    @field_validator("database_url")
+    @classmethod
+    def _use_psycopg2_driver(cls, v: str) -> str:
+        """Neon / Render hand out postgres:// or postgresql:// URLs; SQLAlchemy needs a driver."""
+        for prefix in ("postgres://", "postgresql://"):
+            if v.startswith(prefix):
+                return "postgresql+psycopg2://" + v[len(prefix):]
+        return v
 
 
 settings = Settings()

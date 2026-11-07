@@ -101,3 +101,10 @@ def test_rate_limit(client, auth, monkeypatch):
 def test_docs_not_shadowed_by_redirect(client):
     assert client.get("/docs").status_code == 200
     assert client.get("/api/health").json() == {"status": "ok"}
+
+
+def test_responses_are_never_cacheable(client, auth):
+    code = shorten(client, auth).json()["short_code"]
+    redirect = client.get(f"/{code}", follow_redirects=False)
+    assert redirect.headers["cache-control"] == "no-store"
+    assert client.get("/api/links", headers=auth).headers["cache-control"] == "no-store"
